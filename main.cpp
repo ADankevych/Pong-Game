@@ -28,16 +28,18 @@ public:
         RectangleShape paddle(Vector2f(width, height));
         paddle.setPosition(x, y);
         paddle.setFillColor(color);
-        window.draw(paddle);
 
-        Text text;
         Font font;
         font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
+
+        Text text;
         text.setFont(font);
         text.setString(this->text);
         text.setCharacterSize(20);
         text.setFillColor(Color::White);
         text.setPosition(x + (width - text.getLocalBounds().width)/2, y + (height - text.getLocalBounds().height)/2);
+
+        window.draw(paddle);
         window.draw(text);
     }
 
@@ -55,6 +57,12 @@ public:
     }
 };
 
+void gameProcessFriends(RenderWindow &window) {
+    while (window.isOpen()) {
+        window.clear(Color(190, 190, 190));
+        window.display();
+    }
+}
 
 void gameProcessBot(RenderWindow &window) {
     while (window.isOpen()) {
@@ -63,18 +71,28 @@ void gameProcessBot(RenderWindow &window) {
     }
 }
 
-void playBot(RenderWindow &window) {
-    string playerName;
-    Text nameText;
+void nameEntering(RenderWindow &window, string message, string &playerName) {
     Font font;
     font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
 
+    Text nameText;
     nameText.setFont(font);
     nameText.setCharacterSize(30);
     nameText.setFillColor(Color::Black);
 
+    Text text;
+    text.setFont(font);
+    text.setString(message);
+    text.setCharacterSize(30);
+    text.setFillColor(Color::Black);
+    text.setPosition((BOARD_WIDTH - text.getLocalBounds().width) / 2, BOARD_HEIGHT / 3);
+
+    Event event{};
+
     while (window.isOpen()) {
-        Event event{};
+        window.clear(Color(190, 190, 190));
+        window.draw(text);
+
         while (window.pollEvent(event)) {
             if (event.type == Event::Closed)
                 window.close();
@@ -85,7 +103,7 @@ void playBot(RenderWindow &window) {
                         if (!playerName.empty())
                             playerName.pop_back();
                     } else if (event.text.unicode == '\n') {
-                        gameProcessBot(window);
+                        return;
                     } else {
                         playerName += static_cast<char>(event.text.unicode);
                     }
@@ -96,48 +114,43 @@ void playBot(RenderWindow &window) {
         nameText.setString(playerName);
         nameText.setPosition((BOARD_WIDTH - nameText.getLocalBounds().width) / 2, BOARD_HEIGHT / 3 + 150);
 
-        window.clear(Color(190, 190, 190));
-
-        Text text;
-        text.setFont(font);
-        text.setString("Enter your name:");
-        text.setCharacterSize(30);
-        text.setFillColor(Color::Black);
-        text.setPosition((BOARD_WIDTH - text.getLocalBounds().width) / 2, BOARD_HEIGHT / 3);
-        window.draw(text);
-
         window.draw(nameText);
-
         window.display();
     }
 }
 
-void firstPage(RenderWindow &window){
+int welcomePage(RenderWindow &window){
     Paddle paddle1(BOARD_WIDTH / 4, 450, 200, 50, 0, "Play with bot", Color::Black);
     Paddle paddle2(BOARD_WIDTH / 4 + 325, 450, 200, 50, 0, "Play with friend", Color::Black);
+
+    Font font;
+    font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
+
+    Text textWelcome;
+    textWelcome.setFont(font);
+    textWelcome.setString("Welcome to Pong game!");
+    textWelcome.setCharacterSize(40);
+    textWelcome.setFillColor(Color::Black);
+    textWelcome.setPosition((BOARD_WIDTH - textWelcome.getLocalBounds().width)/2, BOARD_HEIGHT/3); // text.getLocalBounds().width - width of the text
+
+    Text textChoose;
+    textChoose.setFont(font);
+    textChoose.setString("Choose one option:");
+    textChoose.setCharacterSize(30);
+    textChoose.setFillColor(Color::Black);
+    textChoose.setPosition((BOARD_WIDTH - textChoose.getLocalBounds().width)/2, BOARD_HEIGHT/3 + 100);
 
     while (window.isOpen()) {
         window.clear(Color(190, 190, 190));
 
-        Text text;
-        Font font;
-        font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
-        text.setFont(font);
-        text.setString("Welcome to Pong game!");
-        text.setCharacterSize(40);
-        text.setFillColor(Color::Black);
-        text.setPosition((BOARD_WIDTH - text.getLocalBounds().width)/2, BOARD_HEIGHT/3); // text.getLocalBounds().width - width of the text
-        window.draw(text);
-
-        text.setString("Choose one option:");
-        text.setCharacterSize(30);
-        text.setPosition((BOARD_WIDTH - text.getLocalBounds().width)/2, BOARD_HEIGHT/3 + 100);
-        window.draw(text);
+        window.draw(textWelcome);
+        window.draw(textChoose);
 
         paddle1.draw(window);
         paddle2.draw(window);
 
         Event event{};
+
         while (window.pollEvent(event)) {
             if (event.type == Event::Closed)
                 window.close();
@@ -146,22 +159,32 @@ void firstPage(RenderWindow &window){
                 if (event.mouseButton.button == Mouse::Left) {
                     Vector2i mousePos = Mouse::getPosition(window);
                     if (paddle1.isMouseOver(mousePos)) {
-                        playBot(window);
+                        return 1;
                     } else if (paddle2.isMouseOver(mousePos)) {
-                        // playFriend(window);
+                        return 2;
                     }
                 }
             }
         }
-
         window.display();
     }
-
+    return 0;
 }
 
 int main() {
     RenderWindow window(VideoMode(BOARD_WIDTH, BOARD_HEIGHT), "Pong");
 
-    firstPage(window);
+    int playWithBorF = welcomePage(window);
+    string playerName;
+    if (playWithBorF == 1) {
+        nameEntering(window, "Enter your name:", playerName);
+        gameProcessBot(window);
+    } else if (playWithBorF == 2) {
+        nameEntering(window, "Enter player 1 name:", playerName);
+        string player2Name;
+        nameEntering(window, "Enter player 2 name:", player2Name);
+        gameProcessFriends(window);
+    }
+
     return 0;
 }
