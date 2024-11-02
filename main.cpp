@@ -219,6 +219,59 @@ int chooseDifficulty(RenderWindow &window) {
     return 0;
 }
 
+int chooseMode(RenderWindow &window) {
+    Paddle paddle1((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 100, 200, 50, 0, "Default", Color::Black);
+    Paddle paddle2((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 200, 200, 50, 0, "Hello Kitty", Color(255, 105, 180));
+    Paddle paddle3((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 300, 200, 50, 0, "Halloween", Color::Black);
+    Paddle paddle4((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 400, 200, 50, 0, "Christmas", Color::Blue);
+
+    Font font;
+    font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
+
+    Text textMode;
+    textMode.setFont(font);
+    textMode.setString("Cool!\nChoose mode:");
+    textMode.setCharacterSize(35);
+    textMode.setFillColor(Color::Black);
+    textMode.setPosition((BOARD_WIDTH - textMode.getLocalBounds().width)/2, BOARD_HEIGHT/3);
+
+    while (window.isOpen()) {
+        window.clear(Color(190, 190, 190));
+
+        window.draw(textMode);
+
+        paddle1.draw(window);
+        paddle2.draw(window);
+        paddle3.draw(window);
+        paddle4.draw(window);
+
+        Event event{};
+
+        while (window.pollEvent(event)) {
+            if (event.type == Event::Closed)
+                window.close();
+
+            if (event.type == Event::MouseButtonPressed) {
+                if (event.mouseButton.button == Mouse::Left) {
+                    Vector2i mousePos = Mouse::getPosition(window);
+                    if (paddle1.isMouseOver(mousePos)) {
+                        return 1;
+                    } else if (paddle2.isMouseOver(mousePos)) {
+                        return 2;
+                    } else if (paddle3.isMouseOver(mousePos)) {
+                        return 3;
+                    } else if (paddle4.isMouseOver(mousePos)) {
+                        return 4;
+                    }
+                }
+            }
+        }
+        window.display();
+    }
+    return 0;
+}
+
+
 int main() {
     RenderWindow window(VideoMode(BOARD_WIDTH, BOARD_HEIGHT), "Pong");
 
@@ -234,7 +287,8 @@ int main() {
     }
 
     int difficulty = chooseDifficulty(window);
-    cout << difficulty << endl;
+
+    int mode = chooseMode(window);
 
     return 0;
 }
