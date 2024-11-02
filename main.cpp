@@ -171,20 +171,70 @@ int welcomePage(RenderWindow &window){
     return 0;
 }
 
+int chooseDifficulty(RenderWindow &window) {
+    Paddle paddle1((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 100, 200, 45, 0, "Easy", Color::Black);
+    Paddle paddle2((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 200, 200, 45, 0, "Medium", Color::Black);
+    Paddle paddle3((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 300, 200, 45, 0, "Hard", Color::Black);
+
+    Font font;
+    font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
+
+    Text textDifficulty;
+    textDifficulty.setFont(font);
+    textDifficulty.setString("Choose difficulty:");
+    textDifficulty.setCharacterSize(35);
+    textDifficulty.setFillColor(Color::Black);
+    textDifficulty.setPosition((BOARD_WIDTH - textDifficulty.getLocalBounds().width)/2, BOARD_HEIGHT/3);
+
+    while (window.isOpen()) {
+        window.clear(Color(190, 190, 190));
+
+        window.draw(textDifficulty);
+
+        paddle1.draw(window);
+        paddle2.draw(window);
+        paddle3.draw(window);
+
+        Event event{};
+
+        while (window.pollEvent(event)) {
+            if (event.type == Event::Closed)
+                window.close();
+
+            if (event.type == Event::MouseButtonPressed) {
+                if (event.mouseButton.button == Mouse::Left) {
+                    Vector2i mousePos = Mouse::getPosition(window);
+                    if (paddle1.isMouseOver(mousePos)) {
+                        return 1;
+                    } else if (paddle2.isMouseOver(mousePos)) {
+                        return 2;
+                    } else if (paddle3.isMouseOver(mousePos)) {
+                        return 3;
+                    }
+                }
+            }
+        }
+        window.display();
+    }
+    return 0;
+}
+
 int main() {
     RenderWindow window(VideoMode(BOARD_WIDTH, BOARD_HEIGHT), "Pong");
 
     int playWithBorF = welcomePage(window);
     string playerName;
+    string player2Name;
     if (playWithBorF == 1) {
         nameEntering(window, "Enter your name:", playerName);
-        gameProcessBot(window);
+        player2Name = "Bot";
     } else if (playWithBorF == 2) {
         nameEntering(window, "Enter player 1 name:", playerName);
-        string player2Name;
         nameEntering(window, "Enter player 2 name:", player2Name);
-        gameProcessFriends(window);
     }
+
+    int difficulty = chooseDifficulty(window);
+    cout << difficulty << endl;
 
     return 0;
 }
