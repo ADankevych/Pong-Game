@@ -11,23 +11,24 @@ class Paddle { // it will be all in one - players' paddles, buttons design, etc.
 private:
     float x, y, width, height, speed;
     string text;
-    Color color;
+    Color colorPaddle, colorText;
 
 public:
-    Paddle(float x, float y, float width, float height, float speed, string text, Color color) {
+    Paddle(float x, float y, float width, float height, float speed, string text, Color colorPaddle, Color colorText) {
         this->x = x;
         this->y = y;
         this->width = width;
         this->height = height;
         this->speed = speed;
         this->text = text;
-        this->color = color;
+        this->colorPaddle = colorPaddle;
+        this->colorText = colorText;
     }
 
     void draw(RenderWindow &window) {
         RectangleShape paddle(Vector2f(width, height));
         paddle.setPosition(x, y);
-        paddle.setFillColor(color);
+        paddle.setFillColor(colorPaddle);
 
         Font font;
         font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
@@ -36,7 +37,7 @@ public:
         text.setFont(font);
         text.setString(this->text);
         text.setCharacterSize(20);
-        text.setFillColor(Color::White);
+        text.setFillColor(colorText);
         text.setPosition(x + (width - text.getLocalBounds().width)/2, y + (height - text.getLocalBounds().height)/2);
 
         window.draw(paddle);
@@ -120,8 +121,8 @@ void nameEntering(RenderWindow &window, string message, string &playerName) {
 }
 
 int welcomePage(RenderWindow &window){
-    Paddle paddle1(BOARD_WIDTH / 4, 450, 200, 50, 0, "Play with bot", Color::Black);
-    Paddle paddle2(BOARD_WIDTH / 4 + 325, 450, 200, 50, 0, "Play with friend", Color::Black);
+    Paddle paddle1(BOARD_WIDTH / 4, 450, 200, 50, 0, "Play with bot", Color::Black, Color::White);
+    Paddle paddle2(BOARD_WIDTH / 4 + 325, 450, 200, 50, 0, "Play with friend", Color::Black, Color::White);
 
     Font font;
     font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
@@ -172,9 +173,9 @@ int welcomePage(RenderWindow &window){
 }
 
 int chooseDifficulty(RenderWindow &window) {
-    Paddle paddle1((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 100, 200, 45, 0, "Easy", Color::Black);
-    Paddle paddle2((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 200, 200, 45, 0, "Medium", Color::Black);
-    Paddle paddle3((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 300, 200, 45, 0, "Hard", Color::Black);
+    Paddle paddle1((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 100, 200, 45, 0, "Easy", Color::Black, Color::White);
+    Paddle paddle2((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 200, 200, 45, 0, "Medium", Color::Black, Color::White);
+    Paddle paddle3((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 300, 200, 45, 0, "Hard", Color::Black, Color::White);
 
     Font font;
     font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
@@ -220,17 +221,17 @@ int chooseDifficulty(RenderWindow &window) {
 }
 
 int chooseMode(RenderWindow &window) {
-    Paddle paddle1((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 100, 200, 50, 0, "Default", Color::Black);
-    Paddle paddle2((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 200, 200, 50, 0, "Hello Kitty", Color(255, 105, 180));
-    Paddle paddle3((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 300, 200, 50, 0, "Halloween", Color::Black);
-    Paddle paddle4((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 400, 200, 50, 0, "Christmas", Color::Blue);
+    Paddle paddle1((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 100, 200, 50, 0, "Default", Color::Black, Color::White);
+    Paddle paddle2((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 200, 200, 50, 0, "Hello Kitty", Color(255, 105, 180), Color::Black);
+    Paddle paddle3((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 300, 200, 50, 0, "Halloween", Color::Black, Color(255, 165, 0));
+    Paddle paddle4((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 400, 200, 50, 0, "Christmas", Color::Blue, Color::White);
 
     Font font;
     font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
 
     Text textMode;
     textMode.setFont(font);
-    textMode.setString("Cool!\nChoose mode:");
+    textMode.setString("\t Cool!\nChoose mode:");
     textMode.setCharacterSize(35);
     textMode.setFillColor(Color::Black);
     textMode.setPosition((BOARD_WIDTH - textMode.getLocalBounds().width)/2, BOARD_HEIGHT/3);
