@@ -46,6 +46,13 @@ public:
                mousePos.y >= y && mousePos.y <= y + height;
     }
 
+    void moveUp() {
+        y -= speed;
+    }
+
+    void moveDown() {
+        y += speed;
+    }
 };
 
 
