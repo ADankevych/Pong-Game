@@ -29,7 +29,40 @@ public:
         player2 = Player(name);
     }
 
-
+    void setModeAndDifficulty(int difficulty, int mode) {
+        this->mode = mode;
+        this->difficulty = difficulty;
+        colorBackground = Color(190, 190, 190);
+        switch (mode) {
+            case 1:
+                colorPaddle = Color::Black;
+                colorBall = Color::Black;
+                colorMenu = Color(190, 190, 190);
+                break;
+            case 2:
+                colorPaddle = Color(255, 105, 180);
+                colorBall = Color(255, 105, 180);
+                colorMenu = Color(255, 105, 180);
+                texture.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/images/Hello_Kitty.png");
+                break;
+            case 3:
+                colorPaddle = Color::Black;
+                colorBall = Color(255, 165, 0);
+                colorMenu = Color(255, 165, 0);
+                texture.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/images/Halloween.png");
+                break;
+            case 4:
+                colorPaddle = Color::White;
+                colorBall = Color::Red;
+                colorMenu = Color::White;
+                texture.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/images/Christmas.png");
+                break;
+        }
+        ball.setColor(colorBall);
+        setDif();
+        ball.setPos(BOARD_WIDTH / 2 - ball.getRadius(), BOARD_HEIGHT / 2 - ball.getRadius());
+        return;
+    }
 
     void setDif() {
         switch (difficulty) {
@@ -57,7 +90,14 @@ public:
     void draw(RenderWindow &window) {
         while (window.isOpen()) {
 
-
+            if (mode == 1) {
+                    window.clear(colorBackground);
+            }
+            else {
+                Sprite sprite(texture);
+                window.clear(colorBackground);
+                window.draw(sprite);
+            }
             Event event{};
 
             while (window.pollEvent(event)) {
@@ -65,7 +105,12 @@ public:
                     window.close();
             }
 
-
+            RectangleShape dash(Vector2f(2, 10));
+            dash.setFillColor(Color::Black);
+            for (int i = 0; i < BOARD_HEIGHT; i += 20) {
+                dash.setPosition((BOARD_WIDTH - 10) / 2, i);
+                window.draw(dash);
+            }
 
 
             window.draw(player1.draw(window));

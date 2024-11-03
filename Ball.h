@@ -27,12 +27,33 @@ public:
         this->color = color;
     }
 
-    void draw(RenderWindow &window) {
+    CircleShape draw(RenderWindow &window) {
         CircleShape ball(radius);
         ball.setPosition(x, y);
         ball.setFillColor(color);
 
-        window.draw(ball);
+        return ball;
+    }
+
+    void setSpeed(float speed) {
+        this->speed = speed;
+    }
+
+    void setColor(Color color) {
+        this->color = color;
+    }
+
+    void setSize(float radius) {
+        this->radius = radius;
+    }
+
+    void setPos(float x, float y) {
+        this->x = x;
+        this->y = y;
+    }
+
+    float getRadius() {
+        return radius;
     }
 
     void move() {
