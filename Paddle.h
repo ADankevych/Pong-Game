@@ -19,6 +19,8 @@ private:
     Color colorPaddle, colorText;
 
 public:
+    Paddle() = default;
+
     Paddle(float x, float y, float width, float height, float speed, string textPaddle, Color colorPaddle, Color colorText) {
         this->x = x;
         this->y = y;
