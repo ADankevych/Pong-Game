@@ -18,20 +18,20 @@ void gameProcessBot(RenderWindow &window) {
 int main() {
     RenderWindow window(VideoMode(BOARD_WIDTH, BOARD_HEIGHT), "Pong");
 
-    int playWithBorF = welcomePage(window);
+    int playWithBorF = GameSettings::welcomePage(window);
     string playerName;
     string player2Name;
     if (playWithBorF == 1) {
-        nameEntering(window, "Enter your name:", playerName);
+        GameSettings::nameEntering(window, "Enter your name:", playerName);
         player2Name = "Bot";
     } else if (playWithBorF == 2) {
-        nameEntering(window, "Enter player 1 name:", playerName);
-        nameEntering(window, "Enter player 2 name:", player2Name);
+        GameSettings::nameEntering(window, "Enter player 1 name:", playerName);
+        GameSettings::nameEntering(window, "Enter player 2 name:", player2Name);
     }
 
-    int difficulty = chooseDifficulty(window);
+    int difficulty = GameSettings::chooseDifficulty(window);
 
-    int mode = chooseMode(window);
+    int mode = GameSettings::chooseMode(window);
 
     return 0;
 }

@@ -1,5 +1,7 @@
 CMakeFiles/Pong_Game.dir/main.cpp.o: \
   /Users/anastasia_d/CLionProjects/Pong-Game/main.cpp \
+  /Users/anastasia_d/CLionProjects/Pong-Game/GameSettings.h \
+  /Users/anastasia_d/CLionProjects/Pong-Game/Paddle.h \
   /opt/homebrew/include/SFML/Graphics.hpp \
   /opt/homebrew/include/SFML/Window.hpp \
   /opt/homebrew/include/SFML/System.hpp \
