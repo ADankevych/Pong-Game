@@ -1036,4 +1036,7 @@ CMakeFiles/Pong_Game.dir/main.cpp.o: \
   /opt/homebrew/include/SFML/Graphics/Text.hpp \
   /opt/homebrew/include/SFML/Graphics/VertexBuffer.hpp \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/usr/include/c++/v1/iostream \
-  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/usr/include/c++/v1/istream
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/usr/include/c++/v1/istream \
+  /Users/anastasia_d/CLionProjects/Pong-Game/GameProcess.h \
+  /Users/anastasia_d/CLionProjects/Pong-Game/Player.h \
+  /Users/anastasia_d/CLionProjects/Pong-Game/Ball.h

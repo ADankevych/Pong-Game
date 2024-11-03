@@ -5,7 +5,10 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(Pong_Game main.cpp
         GameSettings.h
-        Paddle.h)
+        Paddle.h
+        Player.h
+        GameProcess.h
+        Ball.h)
 
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)
 

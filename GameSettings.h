@@ -12,10 +12,11 @@ float BOARD_HEIGHT = 760;
 
 class GameSettings {
 public:
-    static void nameEntering(RenderWindow &window, const string &message, string &playerName) {
+    static string nameEntering(RenderWindow &window, const string &message) {
         Font font;
         font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
 
+        string playerName;
         Text nameText;
         nameText.setFont(font);
         nameText.setCharacterSize(30);
@@ -44,7 +45,7 @@ public:
                             if (!playerName.empty())
                                 playerName.pop_back();
                         } else if (event.text.unicode == '\n') {
-                            return;
+                            return playerName;
                         } else {
                             playerName += static_cast<char>(event.text.unicode);
                         }
@@ -58,6 +59,7 @@ public:
             window.draw(nameText);
             window.display();
         }
+        return "";
     }
 
     static int welcomePage(RenderWindow &window) {
@@ -88,8 +90,11 @@ public:
             window.draw(textWelcome);
             window.draw(textChoose);
 
-            paddle1.draw(window);
-            paddle2.draw(window);
+            window.draw(paddle1.draw(window));
+            window.draw(paddle1.drawText(window));
+
+            window.draw(paddle2.draw(window));
+            window.draw(paddle2.drawText(window));
 
             Event event{};
 
@@ -134,9 +139,14 @@ public:
 
             window.draw(textDifficulty);
 
-            paddle1.draw(window);
-            paddle2.draw(window);
-            paddle3.draw(window);
+            window.draw(paddle1.draw(window));
+            window.draw(paddle1.drawText(window));
+
+            window.draw(paddle2.draw(window));
+            window.draw(paddle2.drawText(window));
+
+            window.draw(paddle3.draw(window));
+            window.draw(paddle3.drawText(window));
 
             Event event{};
 
@@ -187,10 +197,17 @@ public:
 
             window.draw(textMode);
 
-            paddle1.draw(window);
-            paddle2.draw(window);
-            paddle3.draw(window);
-            paddle4.draw(window);
+            window.draw(paddle1.draw(window));
+            window.draw(paddle1.drawText(window));
+
+            window.draw(paddle2.draw(window));
+            window.draw(paddle2.drawText(window));
+
+            window.draw(paddle3.draw(window));
+            window.draw(paddle3.drawText(window));
+
+            window.draw(paddle4.draw(window));
+            window.draw(paddle4.drawText(window));
 
             Event event{};
 

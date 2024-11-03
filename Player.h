@@ -15,14 +15,18 @@ private:
 public:
     Player() = default;
 
-    Player(string name, Paddle paddle) {
+    Player(string name) {
         this->name = name;
-        this->paddle = paddle;
+        this->paddle = Paddle();
         this->score = 0;
     }
 
-    void draw(RenderWindow &window) {
-        paddle.draw(window);
+    void setPaddle(Paddle paddle) {
+        this->paddle = paddle;
+    }
+
+    RectangleShape draw(RenderWindow &window) {
+        return paddle.draw(window);
     }
 
     void moveUp() {

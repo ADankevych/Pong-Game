@@ -32,11 +32,15 @@ public:
         this->colorText = colorText;
     }
 
-    void draw(RenderWindow &window) {
+    RectangleShape draw(RenderWindow &window) {
         RectangleShape paddle(Vector2f(width, height));
         paddle.setPosition(x, y);
         paddle.setFillColor(colorPaddle);
 
+        return paddle;
+    }
+
+    Text drawText(RenderWindow &window) {
         Font font;
         font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
 
@@ -47,8 +51,7 @@ public:
         text.setFillColor(colorText);
         text.setPosition(x + (width - text.getLocalBounds().width)/2, y + (height - text.getLocalBounds().height)/2);
 
-        window.draw(paddle);
-        window.draw(text);
+        return text;
     }
 
     bool isMouseOver(Vector2i mousePos) {
