@@ -66,7 +66,6 @@ public:
         Paddle paddle1(BOARD_WIDTH / 4, 450, 200, 50, 0, "Play with bot", Color::Black, Color::White);
         Paddle paddle2(BOARD_WIDTH / 4 + 325, 450, 200, 50, 0, "Play with friend", Color::Black, Color::White);
 
-        Font font;
         font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
 
         Text textWelcome;
@@ -124,7 +123,6 @@ public:
                        Color::White);
         Paddle paddle3((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 300, 200, 45, 0, "Hard", Color::Black, Color::White);
 
-        Font font;
         font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
 
         Text textDifficulty;
@@ -182,7 +180,6 @@ public:
         Paddle paddle4((BOARD_WIDTH - 200) / 2, BOARD_HEIGHT / 3 + 400, 200, 50, 0, "Christmas", Color::Blue,
                        Color::White);
 
-        Font font;
         font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
 
         Text textMode;

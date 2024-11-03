@@ -11,6 +11,8 @@
 using namespace std;
 using namespace sf;
 
+Font font;
+
 class Paddle { // it will be all in one - players' paddles, buttons design, etc.
     // Unfortunately, I am not sure how to make rounded edges without making them look awful.
 private:
@@ -41,10 +43,8 @@ public:
     }
 
     Text drawText(RenderWindow &window) {
-        Font font;
-        font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
-
         Text text;
+        font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
         text.setFont(font);
         text.setString(this->textPaddle);
         text.setCharacterSize(20);
