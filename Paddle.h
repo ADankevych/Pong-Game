@@ -34,7 +34,7 @@ public:
         this->colorText = colorText;
     }
 
-    RectangleShape draw(RenderWindow &window) {
+    RectangleShape draw() {
         RectangleShape paddle(Vector2f(width, height));
         paddle.setPosition(x, y);
         paddle.setFillColor(colorPaddle);
@@ -42,7 +42,7 @@ public:
         return paddle;
     }
 
-    Text drawText(RenderWindow &window) {
+    Text drawText() {
         Text text;
         font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
         text.setFont(font);
@@ -51,6 +51,22 @@ public:
         text.setFillColor(colorText);
         text.setPosition(x + (width - text.getLocalBounds().width)/2, y + (height - text.getLocalBounds().height)/2);
 
+        return text;
+    }
+
+    Text drawMenu() {
+        Text text;
+        font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
+        text.setFont(font);
+        string newText = "";
+        for (int i = 0; i < textPaddle.size(); i++) {
+            newText += textPaddle[i];
+            newText += "\n";
+        }
+        text.setString(newText);
+        text.setCharacterSize(30);
+        text.setFillColor(colorText);
+        text.setPosition(x + (width - text.getLocalBounds().width)/2, y + (height - text.getLocalBounds().height)/2);
         return text;
     }
 

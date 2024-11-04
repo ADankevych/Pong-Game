@@ -25,10 +25,13 @@ public:
         this->paddle = paddle;
     }
 
-    RectangleShape draw(RenderWindow &window) {
-        return paddle.draw(window);
+    RectangleShape draw() {
+        return paddle.draw();
     }
 
+    string getName() {
+        return name;
+    }
     void moveUp() {
         paddle.moveUp();
     }

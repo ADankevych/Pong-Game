@@ -27,7 +27,7 @@ public:
         this->color = color;
     }
 
-    CircleShape draw(RenderWindow &window) {
+    CircleShape draw() {
         CircleShape ball(radius);
         ball.setPosition(x, y);
         ball.setFillColor(color);

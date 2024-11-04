@@ -13,7 +13,6 @@ float BOARD_HEIGHT = 760;
 class GameSettings {
 public:
     static string nameEntering(RenderWindow &window, const string &message) {
-        Font font;
         font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
 
         string playerName;
@@ -89,11 +88,11 @@ public:
             window.draw(textWelcome);
             window.draw(textChoose);
 
-            window.draw(paddle1.draw(window));
-            window.draw(paddle1.drawText(window));
+            window.draw(paddle1.draw());
+            window.draw(paddle1.drawText());
 
-            window.draw(paddle2.draw(window));
-            window.draw(paddle2.drawText(window));
+            window.draw(paddle2.draw());
+            window.draw(paddle2.drawText());
 
             Event event{};
 
@@ -137,14 +136,14 @@ public:
 
             window.draw(textDifficulty);
 
-            window.draw(paddle1.draw(window));
-            window.draw(paddle1.drawText(window));
+            window.draw(paddle1.draw());
+            window.draw(paddle1.drawText());
 
-            window.draw(paddle2.draw(window));
-            window.draw(paddle2.drawText(window));
+            window.draw(paddle2.draw());
+            window.draw(paddle2.drawText());
 
-            window.draw(paddle3.draw(window));
-            window.draw(paddle3.drawText(window));
+            window.draw(paddle3.draw());
+            window.draw(paddle3.drawText());
 
             Event event{};
 
@@ -194,17 +193,17 @@ public:
 
             window.draw(textMode);
 
-            window.draw(paddle1.draw(window));
-            window.draw(paddle1.drawText(window));
+            window.draw(paddle1.draw());
+            window.draw(paddle1.drawText());
 
-            window.draw(paddle2.draw(window));
-            window.draw(paddle2.drawText(window));
+            window.draw(paddle2.draw());
+            window.draw(paddle2.drawText());
 
-            window.draw(paddle3.draw(window));
-            window.draw(paddle3.drawText(window));
+            window.draw(paddle3.draw());
+            window.draw(paddle3.drawText());
 
-            window.draw(paddle4.draw(window));
-            window.draw(paddle4.drawText(window));
+            window.draw(paddle4.draw());
+            window.draw(paddle4.drawText());
 
             Event event{};
 

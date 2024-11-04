@@ -113,10 +113,14 @@ public:
             }
 
 
-            window.draw(player1.draw(window));
-            window.draw(player2.draw(window));
-            window.draw(ball.draw(window));
+            window.draw(player1.draw());
+            window.draw(player2.draw());
+            window.draw(ball.draw());
 
+            window.draw(Paddle(10, 10, 30, BOARD_HEIGHT-20, 0, player2.getName(), colorMenu, Color::Black).draw());
+            window.draw(Paddle(10, 10, 30, BOARD_HEIGHT-20, 0, player2.getName(), colorMenu, Color::Black).drawMenu());
+            window.draw(Paddle(BOARD_WIDTH - 40, 10, 30, BOARD_HEIGHT-20, 0, player1.getName(), colorMenu, Color::Black).draw());
+            window.draw(Paddle(BOARD_WIDTH - 40, 10, 30, BOARD_HEIGHT-20, 0, player1.getName(), colorMenu, Color::Black).drawMenu());
             window.display();
         }
     }
