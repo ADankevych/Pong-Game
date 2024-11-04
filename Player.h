@@ -25,6 +25,10 @@ public:
         this->paddle = paddle;
     }
 
+    Paddle getPaddle() {
+        return paddle;
+    }
+
     RectangleShape draw() {
         return paddle.draw();
     }
