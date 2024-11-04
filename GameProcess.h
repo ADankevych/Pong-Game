@@ -67,21 +67,27 @@ public:
     void setDif() {
         switch (difficulty) {
             case 1:
-                player1.setPaddle(Paddle((BOARD_WIDTH - 40) / 4 * 3, (BOARD_HEIGHT - 200) / 2, 40, 200, 20, "", colorPaddle, colorPaddle));
-                player2.setPaddle(Paddle((BOARD_WIDTH - 40) / 4, (BOARD_HEIGHT - 200) / 2, 40, 200, 20, "", colorPaddle, colorPaddle));
-                ball.setSpeed(10);
+                player1.setPaddle(Paddle((BOARD_WIDTH - 40) / 5 * 4, (BOARD_HEIGHT - 200) / 2, 40, 200, 20, "", colorPaddle, colorPaddle));
+                player2.setPaddle(Paddle((BOARD_WIDTH - 40) / 5, (BOARD_HEIGHT - 200) / 2, 40, 200, 20, "", colorPaddle, colorPaddle));
+                player1.setSpeed(2);
+                player2.setSpeed(2);
+                ball.setSpeed(2);
                 ball.setSize(50);
                 break;
             case 2:
-                player1.setPaddle(Paddle((BOARD_WIDTH - 30) / 4 * 3, (BOARD_HEIGHT - 150) / 2, 30, 150, 10, "", colorPaddle, colorPaddle));
-                player2.setPaddle(Paddle((BOARD_WIDTH - 30) / 4, (BOARD_HEIGHT - 150) / 2, 30, 150, 10, "", colorPaddle, colorPaddle));
-                ball.setSpeed(20);
+                player1.setPaddle(Paddle((BOARD_WIDTH - 30) / 5 * 4, (BOARD_HEIGHT - 150) / 2, 30, 150, 10, "", colorPaddle, colorPaddle));
+                player2.setPaddle(Paddle((BOARD_WIDTH - 30) / 5, (BOARD_HEIGHT - 150) / 2, 30, 150, 10, "", colorPaddle, colorPaddle));
+                player1.setSpeed(1.5);
+                player2.setSpeed(1.5);
+                ball.setSpeed(5);
                 ball.setSize(40);
                 break;
             case 3:
-                player1.setPaddle(Paddle((BOARD_WIDTH - 20) / 4 * 3, (BOARD_HEIGHT - 75) / 2, 20, 75, 10, "", colorPaddle, colorPaddle));
-                player2.setPaddle(Paddle((BOARD_WIDTH - 20) / 4, (BOARD_HEIGHT - 75) / 2, 20, 75, 10, "", colorPaddle, colorPaddle));
-                ball.setSpeed(30);
+                player1.setPaddle(Paddle((BOARD_WIDTH - 20) / 5 * 4, (BOARD_HEIGHT - 75) / 2, 20, 75, 10, "", colorPaddle, colorPaddle));
+                player2.setPaddle(Paddle((BOARD_WIDTH - 20) / 5, (BOARD_HEIGHT - 75) / 2, 20, 75, 10, "", colorPaddle, colorPaddle));
+                player1.setSpeed(1);
+                player2.setSpeed(1);
+                ball.setSpeed(7.5);
                 ball.setSize(30);
                 break;
         }
@@ -112,6 +118,18 @@ public:
                 window.draw(dash);
             }
 
+            if (Keyboard::isKeyPressed(Keyboard::W)) {
+                player2.moveUp();
+            }
+            if (Keyboard::isKeyPressed(Keyboard::S)) {
+                player2.moveDown();
+            }
+            if (Keyboard::isKeyPressed(Keyboard::Up)) {
+                player1.moveUp();
+            }
+            if (Keyboard::isKeyPressed(Keyboard::Down)) {
+                player1.moveDown();
+            }
 
             window.draw(player1.draw());
             window.draw(player2.draw());
