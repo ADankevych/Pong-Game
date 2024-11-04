@@ -87,16 +87,28 @@ public:
         }
     }
 
-    void setSpeed(float speed) {
-        this->speed = speed;
-    }
-
     float getXPos() {
         return x;
     }
 
     float getYPos() {
         return y;
+    }
+
+    float getWidth() {
+        return width;
+    }
+
+    float getHeight() {
+        return height;
+    }
+
+    void setSpeed(float speed) {
+        this->speed = speed;
+    }
+
+    float getSpeed() {
+        return speed;
     }
 };
 
