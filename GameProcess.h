@@ -121,6 +121,8 @@ public:
             window.draw(Paddle(10, 10, 30, BOARD_HEIGHT-20, 0, player2.getName(), colorMenu, Color::Black).drawMenu());
             window.draw(Paddle(BOARD_WIDTH - 40, 10, 30, BOARD_HEIGHT-20, 0, player1.getName(), colorMenu, Color::Black).draw());
             window.draw(Paddle(BOARD_WIDTH - 40, 10, 30, BOARD_HEIGHT-20, 0, player1.getName(), colorMenu, Color::Black).drawMenu());
+            window.draw(Paddle(10, BOARD_HEIGHT - 60, 30, 30, 0, to_string(player2.getScore()), colorMenu, Color::Black).drawText());
+            window.draw(Paddle(BOARD_WIDTH - 40, BOARD_HEIGHT - 60, 30, 30, 0, to_string(player1.getScore()), colorMenu, Color::Black).drawText());
             window.display();
         }
     }

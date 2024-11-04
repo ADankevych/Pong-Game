@@ -32,6 +32,11 @@ public:
     string getName() {
         return name;
     }
+
+    int getScore() {
+        return score;
+    }
+
     void moveUp() {
         paddle.moveUp();
     }
