@@ -76,11 +76,19 @@ public:
     }
 
     void moveUp() {
-        y -= speed;
+        if (y-speed >= 0) {
+            y -= speed;
+        }
     }
 
     void moveDown() {
-        y += speed;
+        if (y+height+speed <= 760) {
+            y += speed;
+        }
+    }
+
+    void setSpeed(float speed) {
+        this->speed = speed;
     }
 };
 
