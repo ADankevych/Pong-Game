@@ -60,7 +60,7 @@ public:
         }
         ball.setColor(colorBall);
         setDif();
-        ball.setPos(BOARD_WIDTH / 2 - ball.getRadius(), BOARD_HEIGHT / 2 - ball.getRadius());
+        ball.setPos(player1.getPaddle().getXPos() - 2 * ball.getRadius(), BOARD_HEIGHT / 2 - ball.getRadius());
         return;
     }
 
