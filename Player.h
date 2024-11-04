@@ -53,5 +53,9 @@ public:
         paddle.setSpeed(speed);
     }
 
+    void setScore(int score) {
+        this->score = score;
+    }
+
 };
 #endif //PONG_GAME_PLAYER_H
