@@ -90,6 +90,14 @@ public:
     void setSpeed(float speed) {
         this->speed = speed;
     }
+
+    float getXPos() {
+        return x;
+    }
+
+    float getYPos() {
+        return y;
+    }
 };
 
 #endif //PONG_GAME_PADDLE_H
