@@ -71,44 +71,42 @@ public:
                 player2.setPaddle(Paddle((BOARD_WIDTH - 40) / 5, (BOARD_HEIGHT - 200) / 2, 40, 200, 20, "", colorPaddle, colorPaddle));
                 player1.setSpeed(2);
                 player2.setSpeed(2);
-                ball.setSpeed(2);
-                ball.setSize(50);
+                ball.setSpeed(0.5);
+                ball.setRadius(50);
                 break;
             case 2:
                 player1.setPaddle(Paddle((BOARD_WIDTH - 30) / 5 * 4, (BOARD_HEIGHT - 150) / 2, 30, 150, 10, "", colorPaddle, colorPaddle));
                 player2.setPaddle(Paddle((BOARD_WIDTH - 30) / 5, (BOARD_HEIGHT - 150) / 2, 30, 150, 10, "", colorPaddle, colorPaddle));
                 player1.setSpeed(1.5);
                 player2.setSpeed(1.5);
-                ball.setSpeed(5);
-                ball.setSize(40);
+                ball.setSpeed(1);
+                ball.setRadius(40);
                 break;
             case 3:
                 player1.setPaddle(Paddle((BOARD_WIDTH - 20) / 5 * 4, (BOARD_HEIGHT - 75) / 2, 20, 75, 10, "", colorPaddle, colorPaddle));
                 player2.setPaddle(Paddle((BOARD_WIDTH - 20) / 5, (BOARD_HEIGHT - 75) / 2, 20, 75, 10, "", colorPaddle, colorPaddle));
                 player1.setSpeed(1);
                 player2.setSpeed(1);
-                ball.setSpeed(7.5);
-                ball.setSize(30);
+                ball.setSpeed(2);
+                ball.setRadius(30);
                 break;
         }
     }
 
     void draw(RenderWindow &window) {
+        bool isBallMoving = false;
         while (window.isOpen()) {
-
-            if (mode == 1) {
-                    window.clear(colorBackground);
-            }
-            else {
+            window.clear(colorBackground);
+            if (mode != 1) {
                 Sprite sprite(texture);
-                window.clear(colorBackground);
                 window.draw(sprite);
             }
             Event event{};
 
             while (window.pollEvent(event)) {
-                if (event.type == Event::Closed)
+                if (event.type == Event::Closed) {
                     window.close();
+                }
             }
 
             RectangleShape dash(Vector2f(2, 10));
@@ -131,14 +129,54 @@ public:
                 player1.moveDown();
             }
 
+            if (!isBallMoving) {
+                if (Keyboard::isKeyPressed(Keyboard::Up) || Keyboard::isKeyPressed(Keyboard::Down) ||
+                    Keyboard::isKeyPressed(Keyboard::W) || Keyboard::isKeyPressed(Keyboard::S)) {
+                    isBallMoving = true;
+                }
+            }
+
+            if (isBallMoving) {
+                ball.move();
+            }
+
+            if (ball.getY() <= 0 || ball.getY() + ball.getRadius() * 2 >= BOARD_HEIGHT) {
+                ball.reverseY();
+            }
+
+            if (ball.getX() < player2.getPaddle().getXPos() + player2.getPaddle().getWidth()) {
+                player1.setScore(player1.getScore() + 1);
+                player1.setPaddle(Paddle((BOARD_WIDTH - player1.getPaddle().getWidth()) / 5 * 4, (BOARD_HEIGHT - player1.getPaddle().getHeight())/2, player1.getPaddle().getWidth(), player1.getPaddle().getHeight(), player1.getPaddle().getSpeed(), player1.getName(), colorPaddle, colorPaddle));
+                player2.setPaddle(Paddle((BOARD_WIDTH - player2.getPaddle().getWidth()) / 5, (BOARD_HEIGHT - player2.getPaddle().getHeight())/2, player2.getPaddle().getWidth(), player2.getPaddle().getHeight(), player2.getPaddle().getSpeed(), player2.getName(), colorPaddle, colorPaddle));
+                ball.setPos(player2.getPaddle().getXPos() + player2.getPaddle().getWidth(), BOARD_HEIGHT / 2 - ball.getRadius());
+                isBallMoving = false;
+            } else if (ball.getX() + ball.getRadius() * 2 > player1.getPaddle().getXPos() + player1.getPaddle().getWidth()) {
+                player2.setScore(player2.getScore() + 1);
+                player1.setPaddle(Paddle((BOARD_WIDTH - player1.getPaddle().getWidth()) / 5 * 4, (BOARD_HEIGHT - player1.getPaddle().getHeight())/2, player1.getPaddle().getWidth(), player1.getPaddle().getHeight(), player1.getPaddle().getSpeed(), player1.getName(), colorPaddle, colorPaddle));
+                player2.setPaddle(Paddle((BOARD_WIDTH - player2.getPaddle().getWidth()) / 5, (BOARD_HEIGHT - player2.getPaddle().getHeight())/2, player2.getPaddle().getWidth(), player2.getPaddle().getHeight(), player2.getPaddle().getSpeed(), player2.getName(), colorPaddle, colorPaddle));
+                ball.setPos(player1.getPaddle().getXPos() - 2 * ball.getRadius(), BOARD_HEIGHT / 2 - ball.getRadius());
+                isBallMoving = false;
+            }
+
+            if (ball.getX() <= player2.getPaddle().getXPos() + player2.getPaddle().getWidth() &&
+                ball.getY() + ball.getRadius() >= player2.getPaddle().getYPos() &&
+                ball.getY() <= player2.getPaddle().getYPos() + player2.getPaddle().getHeight()) {
+                ball.reverseX();
+            }
+            if (ball.getX() + ball.getRadius() * 2 >= player1.getPaddle().getXPos() &&
+                ball.getY() + ball.getRadius() >= player1.getPaddle().getYPos() &&
+                ball.getY() <= player1.getPaddle().getYPos() + player1.getPaddle().getHeight()) {
+                ball.reverseX();
+            }
+
             window.draw(player1.draw());
             window.draw(player2.draw());
             window.draw(ball.draw());
 
-            window.draw(Paddle(10, 10, 30, BOARD_HEIGHT-20, 0, player2.getName(), colorMenu, Color::Black).draw());
-            window.draw(Paddle(10, 10, 30, BOARD_HEIGHT-20, 0, player2.getName(), colorMenu, Color::Black).drawMenu());
-            window.draw(Paddle(BOARD_WIDTH - 40, 10, 30, BOARD_HEIGHT-20, 0, player1.getName(), colorMenu, Color::Black).draw());
-            window.draw(Paddle(BOARD_WIDTH - 40, 10, 30, BOARD_HEIGHT-20, 0, player1.getName(), colorMenu, Color::Black).drawMenu());
+            window.draw(Paddle(10, 10, 30, BOARD_HEIGHT - 20, 0, player2.getName(), colorMenu, Color::Black).draw());
+            window.draw(Paddle(10, 10, 30, BOARD_HEIGHT - 20, 0, player2.getName(), colorMenu, Color::Black).drawMenu());
+            window.draw(Paddle(BOARD_WIDTH - 40, 10, 30, BOARD_HEIGHT - 20, 0, player1.getName(), colorMenu, Color::Black).draw());
+            window.draw(Paddle(BOARD_WIDTH - 40, 10, 30, BOARD_HEIGHT - 20, 0, player1.getName(), colorMenu, Color::Black).drawMenu());
             window.draw(Paddle(10, BOARD_HEIGHT - 60, 30, 30, 0, to_string(player2.getScore()), colorMenu, Color::Black).drawText());
             window.draw(Paddle(BOARD_WIDTH - 40, BOARD_HEIGHT - 60, 30, 30, 0, to_string(player1.getScore()), colorMenu, Color::Black).drawText());
             window.display();
