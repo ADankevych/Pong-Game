@@ -13,7 +13,9 @@ using namespace sf;
 
 class Ball {
 private:
-    float x, y, radius, speed;
+    float x, y;
+    float radius;
+    float speedX, speedY;
     Color color;
 
 public:
@@ -23,7 +25,8 @@ public:
         this->x = x;
         this->y = y;
         this->radius = radius;
-        this->speed = speed;
+        this->speedX = speed;
+        this->speedY = speed;
         this->color = color;
     }
 
@@ -31,20 +34,24 @@ public:
         CircleShape ball(radius);
         ball.setPosition(x, y);
         ball.setFillColor(color);
-
         return ball;
     }
 
     void setSpeed(float speed) {
-        this->speed = speed;
+        this->speedX = speed;
+        this->speedY = speed;
     }
 
     void setColor(Color color) {
         this->color = color;
     }
 
-    void setSize(float radius) {
+    void setRadius(float radius) {
         this->radius = radius;
+    }
+
+    float getRadius() {
+        return radius;
     }
 
     void setPos(float x, float y) {
@@ -52,12 +59,26 @@ public:
         this->y = y;
     }
 
-    float getRadius() {
-        return radius;
+    float getX() const {
+        return x;
+    }
+
+    float getY() const {
+        return y;
     }
 
     void move() {
+        x += speedX;
+        y += speedY;
     }
 
+    void reverseX() {
+        speedX = -speedX;
+    }
+
+    void reverseY() {
+        speedY = -speedY;
+    }
 };
+
 #endif //PONG_GAME_BALL_H
