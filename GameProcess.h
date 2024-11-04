@@ -93,6 +93,70 @@ public:
         }
     }
 
+    void winnerPage(RenderWindow &window, string winner) {
+        Paddle paddlePlayAgain(BOARD_WIDTH / 4, 450, 200, 50, 0, "Play again", Color::Black, Color::White);
+        Paddle paddleExit(BOARD_WIDTH / 4 + 325, 450, 200, 50, 0, "Exit", Color::Black, Color::White);
+
+        font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
+
+        Text textWinner;
+        textWinner.setFont(font);
+        textWinner.setString("Winner is " + winner + "!");
+        textWinner.setCharacterSize(40);
+        textWinner.setFillColor(Color::Black);
+        textWinner.setPosition((BOARD_WIDTH - textWinner.getLocalBounds().width) / 2,
+                                BOARD_HEIGHT / 3);
+
+        Text textChoose;
+        textChoose.setFont(font);
+        textChoose.setString("Choose one option:");
+        textChoose.setCharacterSize(30);
+        textChoose.setFillColor(Color::Black);
+        textChoose.setPosition((BOARD_WIDTH - textChoose.getLocalBounds().width) / 2, BOARD_HEIGHT / 3 + 100);
+
+        while (window.isOpen()) {
+            window.clear(Color(190, 190, 190));
+            if (mode != 1) {
+                Sprite sprite(texture);
+                window.draw(sprite);
+            }
+
+            window.draw(textWinner);
+            window.draw(textChoose);
+
+            window.draw(paddlePlayAgain.draw());
+            window.draw(paddlePlayAgain.drawText());
+
+            window.draw(paddleExit.draw());
+            window.draw(paddleExit.drawText());
+
+            Event event{};
+
+            while (window.pollEvent(event)) {
+                if (event.type == Event::Closed)
+                    window.close();
+
+                if (event.type == Event::MouseButtonPressed) {
+                    if (event.mouseButton.button == Mouse::Left) {
+                        Vector2i mousePos = Mouse::getPosition(window);
+                        if (paddlePlayAgain.isMouseOver(mousePos)) {
+                            player1.setScore(0);
+                            player2.setScore(0);
+                            setDif();
+                            ball.setPos(player1.getPaddle().getXPos() - 2 * ball.getRadius(), BOARD_HEIGHT / 2 - ball.getRadius());
+                            return;
+                        } else if (paddleExit.isMouseOver(mousePos)) {
+                            window.close();
+                        }
+                    }
+                }
+
+            }
+            window.display();
+        }
+    }
+
+
     void draw(RenderWindow &window) {
         bool isBallMoving = false;
         while (window.isOpen()) {
@@ -167,6 +231,10 @@ public:
                 ball.getY() + ball.getRadius() >= player1.getPaddle().getYPos() &&
                 ball.getY() <= player1.getPaddle().getYPos() + player1.getPaddle().getHeight()) {
                 ball.reverseX();
+            }
+
+            if (player1.getScore() == 5 || player2.getScore() == 5) {
+                winnerPage(window, player1.getScore() == 5 ? player1.getName() : player2.getName());
             }
 
             window.draw(player1.draw());
