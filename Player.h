@@ -45,6 +45,9 @@ public:
         paddle.moveDown();
     }
 
+    void setSpeed(float speed) {
+        paddle.setSpeed(speed);
+    }
 
 };
 #endif //PONG_GAME_PLAYER_H
