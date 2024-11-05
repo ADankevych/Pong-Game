@@ -10,6 +10,7 @@
 
 class GameProcess {
 private:
+    int BotOrFriend;
     Player player1;
     Player player2;
     Ball ball;
@@ -21,17 +22,7 @@ private:
 public:
     GameProcess() = default;
 
-    void setNamePlayer1(string name) {
-        player1 = Player(name);
-    }
-
-    void setNamePlayer2(string name) {
-        player2 = Player(name);
-    }
-
-    void setModeAndDifficulty(int difficulty, int mode) {
-        this->mode = mode;
-        this->difficulty = difficulty;
+    void setModeAndDifficulty() {
         colorBackground = Color(190, 190, 190);
         switch (mode) {
             case 1:
@@ -59,12 +50,12 @@ public:
                 break;
         }
         ball.setColor(colorBall);
-        setDif();
+        setDifficulty();
         ball.setPos(player1.getPaddle().getXPos() - 2 * ball.getRadius(), BOARD_HEIGHT / 2 - ball.getRadius());
         return;
     }
 
-    void setDif() {
+    void setDifficulty() {
         switch (difficulty) {
             case 1:
                 player1.setPaddle(Paddle((BOARD_WIDTH - 40) / 5 * 4, (BOARD_HEIGHT - 200) / 2, 40,
@@ -100,17 +91,20 @@ public:
     }
 
     void startNewGame(RenderWindow &window) {
-        int playWithBorF = GameSettings::welcomePage(window);
+        BotOrFriend = GameSettings::welcomePage(window);
 
-        if (playWithBorF == 1) {
-            setNamePlayer1(GameSettings::nameEntering(window, "Enter your name:"));
-            setNamePlayer2("Bot");
-        } else if (playWithBorF == 2) {
-            setNamePlayer1(GameSettings::nameEntering(window, "Enter player 1 name:"));
-            setNamePlayer2(GameSettings::nameEntering(window, "Enter player 2 name:"));
+        if (BotOrFriend == 1) {
+            player1 = Player(GameSettings::nameEntering(window, "Enter your name:"));
+            player2 = Player("Bot");
+        } else if (BotOrFriend == 2) {
+            player1 = Player(GameSettings::nameEntering(window, "Enter player 1 name:"));
+            player2 = Player(GameSettings::nameEntering(window, "Enter player 2 name:"));
         }
 
-        setModeAndDifficulty(GameSettings::chooseDifficulty(window), GameSettings::chooseMode(window));
+        mode = GameSettings::chooseDifficulty(window);
+        difficulty = GameSettings::chooseMode(window);
+
+        setModeAndDifficulty();
         draw(window);
     }
 
@@ -170,7 +164,7 @@ public:
                         if (paddlePlayAgain.isMouseOver(mousePos)) {
                             player1.setScore(0);
                             player2.setScore(0);
-                            setDif();
+                            setDifficulty();
                             ball.setPos(player1.getPaddle().getXPos() - 2 * ball.getRadius(),
                                         BOARD_HEIGHT / 2 - ball.getRadius());
                             return;
