@@ -5,6 +5,7 @@
 #ifndef PONG_GAME_PLAYER_H
 #define PONG_GAME_PLAYER_H
 #include "Paddle.h"
+#include "Ball.h"
 
 class Player {
 private:
@@ -47,6 +48,14 @@ public:
 
     void moveDown() {
         paddle.moveDown();
+    }
+
+    void moveBot(Ball ball) {
+        if (ball.getY() + ball.getRadius() > getPaddle().getYPos() + getPaddle().getHeight() / 2) {
+            moveDown();
+        } else if (ball.getY() < getPaddle().getYPos() + getPaddle().getHeight() / 2) {
+            moveUp();
+        }
     }
 
     void setSpeed(float speed) {
