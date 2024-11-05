@@ -180,6 +180,13 @@ public:
         }
     }
 
+    void moveBot() {
+        if (ball.getY() + ball.getRadius() > player2.getPaddle().getYPos() + player2.getPaddle().getHeight() / 2) {
+            player2.moveDown();
+        } else if (ball.getY() < player2.getPaddle().getYPos() + player2.getPaddle().getHeight() / 2) {
+            player2.moveUp();
+        }
+    }
 
     void draw(RenderWindow &window) {
         bool isBallMoving = false;
@@ -204,19 +211,28 @@ public:
                 window.draw(dash);
             }
 
-            if (Keyboard::isKeyPressed(Keyboard::W)) {
-                player2.moveUp();
+            if (BotOrFriend == 1) {
+                moveBot();
+                if (Keyboard::isKeyPressed(Keyboard::Up)) {
+                    player1.moveUp();
+                }
+                if (Keyboard::isKeyPressed(Keyboard::Down)) {
+                    player1.moveDown();
+                }
+            } else {
+                if (Keyboard::isKeyPressed(Keyboard::W)) {
+                    player2.moveUp();
+                }
+                if (Keyboard::isKeyPressed(Keyboard::S)) {
+                    player2.moveDown();
+                }
+                if (Keyboard::isKeyPressed(Keyboard::Up)) {
+                    player1.moveUp();
+                }
+                if (Keyboard::isKeyPressed(Keyboard::Down)) {
+                    player1.moveDown();
+                }
             }
-            if (Keyboard::isKeyPressed(Keyboard::S)) {
-                player2.moveDown();
-            }
-            if (Keyboard::isKeyPressed(Keyboard::Up)) {
-                player1.moveUp();
-            }
-            if (Keyboard::isKeyPressed(Keyboard::Down)) {
-                player1.moveDown();
-            }
-
             if (!isBallMoving) {
                 if (Keyboard::isKeyPressed(Keyboard::Up) || Keyboard::isKeyPressed(Keyboard::Down) ||
                     Keyboard::isKeyPressed(Keyboard::W) || Keyboard::isKeyPressed(Keyboard::S)) {
