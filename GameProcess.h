@@ -99,10 +99,27 @@ public:
         }
     }
 
+    void startNewGame(RenderWindow &window) {
+        int playWithBorF = GameSettings::welcomePage(window);
+
+        if (playWithBorF == 1) {
+            setNamePlayer1(GameSettings::nameEntering(window, "Enter your name:"));
+            setNamePlayer2("Bot");
+        } else if (playWithBorF == 2) {
+            setNamePlayer1(GameSettings::nameEntering(window, "Enter player 1 name:"));
+            setNamePlayer2(GameSettings::nameEntering(window, "Enter player 2 name:"));
+        }
+
+        setModeAndDifficulty(GameSettings::chooseDifficulty(window), GameSettings::chooseMode(window));
+        draw(window);
+    }
+
     void winnerPage(RenderWindow &window, string winner) {
         Paddle paddlePlayAgain(BOARD_WIDTH / 4, 450, 200, 50, 0, "Play again",
                                Color::Black, Color::White);
         Paddle paddleExit(BOARD_WIDTH / 4 + 325, 450, 200, 50, 0, "Exit",
+                          Color::Black, Color::White);
+        Paddle paddleMenu(BOARD_WIDTH / 4 + 140, 650, 250, 50, 0, "Restart whole program",
                           Color::Black, Color::White);
 
         font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
@@ -138,6 +155,9 @@ public:
             window.draw(paddleExit.draw());
             window.draw(paddleExit.drawText());
 
+            window.draw(paddleMenu.draw());
+            window.draw(paddleMenu.drawText());
+
             Event event{};
 
             while (window.pollEvent(event)) {
@@ -156,6 +176,8 @@ public:
                             return;
                         } else if (paddleExit.isMouseOver(mousePos)) {
                             window.close();
+                        } else if (paddleMenu.isMouseOver(mousePos)) {
+                            startNewGame(window);
                         }
                     }
                 }
