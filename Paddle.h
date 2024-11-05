@@ -66,7 +66,7 @@ public:
         return text;
     }
 
-    Text drawMenu() {
+    Text drawAsMenu() {
         Text text;
         font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
         text.setFont(font);
