@@ -54,6 +54,18 @@ public:
         return text;
     }
 
+    Text drawText(int size) {
+        Text text;
+        font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
+        text.setFont(font);
+        text.setString(this->textPaddle);
+        text.setCharacterSize(size);
+        text.setFillColor(colorText);
+        text.setPosition(x + (width - text.getLocalBounds().width)/2, y + (height - text.getLocalBounds().height)/2);
+
+        return text;
+    }
+
     Text drawMenu() {
         Text text;
         font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
