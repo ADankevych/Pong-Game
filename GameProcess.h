@@ -352,10 +352,6 @@ public:
                                player2.getName(), colorMenu, Color::Black);
         Paddle player1NameMenu(BOARD_WIDTH - 40, 10, 30, BOARD_HEIGHT - 20, 0,
                                player1.getName(), colorMenu, Color::Black);
-        Paddle player2score(10, BOARD_HEIGHT - 60, 30, 30, 0,
-                            to_string(player2.getScore()),colorMenu, Color::Black);
-        Paddle player1score(BOARD_WIDTH - 40, BOARD_HEIGHT - 60, 30, 30, 0,
-                            to_string(player1.getScore()),colorMenu, Color::Black);
 
         bool isBallMoving = false;
         while (window.isOpen()) {
@@ -409,8 +405,12 @@ public:
             window.draw(player2NameMenu.drawAsMenu());
             window.draw(player1NameMenu.draw());
             window.draw(player1NameMenu.drawAsMenu());
-            window.draw(player2score.drawText());
-            window.draw(player1score.drawText());
+            window.draw(Paddle(10, BOARD_HEIGHT - 60, 30, 30, 0,
+                               to_string(player2.getScore()),colorMenu,
+                               Color::Black).drawText());
+            window.draw(Paddle(BOARD_WIDTH - 40, BOARD_HEIGHT - 60, 30, 30, 0,
+                               to_string(player1.getScore()),colorMenu,
+                               Color::Black).drawText());
             window.display();
         }
     }
