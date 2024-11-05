@@ -52,7 +52,6 @@ public:
         ball.setColor(colorBall);
         setDifficulty();
         ball.setPos(player1.getPaddle().getXPos() - 2 * ball.getRadius(), BOARD_HEIGHT / 2 - ball.getRadius());
-        return;
     }
 
     void setDifficulty() {
@@ -101,8 +100,8 @@ public:
             player2 = Player(GameSettings::nameEntering(window, "Enter player 2 name:"));
         }
 
-        mode = GameSettings::chooseDifficulty(window);
-        difficulty = GameSettings::chooseMode(window);
+        difficulty = GameSettings::chooseDifficulty(window);
+        mode = GameSettings::chooseMode(window);
 
         setModeAndDifficulty();
         draw(window);
