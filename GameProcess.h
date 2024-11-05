@@ -133,7 +133,7 @@ public:
         textChoose.setPosition((BOARD_WIDTH - textChoose.getLocalBounds().width) / 2, BOARD_HEIGHT / 3 + 100);
 
         while (window.isOpen()) {
-            window.clear(Color(190, 190, 190));
+            window.clear(colorBackground);
             if (mode != 1) {
                 Sprite sprite(texture);
                 window.draw(sprite);
@@ -188,7 +188,81 @@ public:
         }
     }
 
+    void menu(RenderWindow &window) {
+        Paddle paddlePlay(BOARD_WIDTH / 4, 350, 200, 50, 0, "Continue",
+                          colorMenu, Color::Black);
+        Paddle paddleExit(BOARD_WIDTH / 4 + 140, 550, 200, 50, 0, "Exit",
+                          colorMenu, Color::Black);
+        Paddle paddleRestart(BOARD_WIDTH / 4 + 325, 350, 200, 50, 0, "Restart",
+                             colorMenu, Color::Black);
+        Paddle paddleReturn(BOARD_WIDTH / 4 + 90, 450, 300, 50, 0,
+                            "Return to welcome page",colorMenu, Color::Black);
+
+        font.loadFromFile("/Users/anastasia_d/CLionProjects/Pong-Game/timesnewromanpsmt.ttf");
+
+        Text textMenu;
+        textMenu.setFont(font);
+        textMenu.setString("Menu");
+        textMenu.setCharacterSize(30);
+        textMenu.setFillColor(Color::Black);
+        textMenu.setPosition((BOARD_WIDTH - textMenu.getLocalBounds().width) / 2,
+                             BOARD_HEIGHT / 4);
+
+        while (window.isOpen()) {
+            window.clear(colorBackground);
+            if (mode != 1) {
+                Sprite sprite(texture);
+                window.draw(sprite);
+            }
+
+            window.draw(textMenu);
+
+            window.draw(paddlePlay.draw());
+            window.draw(paddlePlay.drawText());
+
+            window.draw(paddleExit.draw());
+            window.draw(paddleExit.drawText());
+
+            window.draw(paddleRestart.draw());
+            window.draw(paddleRestart.drawText());
+
+            window.draw(paddleReturn.draw());
+            window.draw(paddleReturn.drawText());
+
+            Event event{};
+
+            while (window.pollEvent(event)) {
+                if (event.type == Event::Closed)
+                    window.close();
+
+                if (event.type == Event::MouseButtonPressed) {
+                    if (event.mouseButton.button == Mouse::Left) {
+                        Vector2i mousePos = Mouse::getPosition(window);
+                        if (paddlePlay.isMouseOver(mousePos)) {
+                            return;
+                        } else if (paddleExit.isMouseOver(mousePos)) {
+                            window.close();
+                        } else if (paddleRestart.isMouseOver(mousePos)) {
+                            player1.setScore(0);
+                            player2.setScore(0);
+                            setDifficulty();
+                            ball.setPos(player1.getPaddle().getXPos() - 2 * ball.getRadius(),
+                                        BOARD_HEIGHT / 2 - ball.getRadius());
+                            draw(window);
+                        } else if (paddleReturn.isMouseOver(mousePos)) {
+                            startNewGame(window);
+                        }
+                    }
+                }
+            }
+            window.display();
+        }
+    };
+
     void draw(RenderWindow &window) {
+        Paddle menuButton((BOARD_WIDTH - 75) / 2, 10, 75, 25, 0, "Menu",
+                          colorMenu, Color::Black);
+
         bool isBallMoving = false;
         while (window.isOpen()) {
             window.clear(colorBackground);
@@ -202,6 +276,15 @@ public:
                 if (event.type == Event::Closed) {
                     window.close();
                 }
+
+                if (event.type == Event::MouseButtonPressed) {
+                    if (event.mouseButton.button == Mouse::Left) {
+                        Vector2i mousePos = Mouse::getPosition(window);
+                        if (menuButton.isMouseOver(mousePos)) {
+                            menu(window);
+                        }
+                    }
+                }
             }
 
             RectangleShape dash(Vector2f(2, 10));
@@ -212,12 +295,14 @@ public:
             }
 
             if (BotOrFriend == 1) {
-                moveBot();
                 if (Keyboard::isKeyPressed(Keyboard::Up)) {
                     player1.moveUp();
                 }
                 if (Keyboard::isKeyPressed(Keyboard::Down)) {
                     player1.moveDown();
+                }
+                if (isBallMoving) {
+                    moveBot();
                 }
             } else {
                 if (Keyboard::isKeyPressed(Keyboard::W)) {
@@ -301,6 +386,9 @@ public:
             window.draw(player1.draw());
             window.draw(player2.draw());
             window.draw(ball.draw());
+
+            window.draw(menuButton.draw());
+            window.draw(menuButton.drawText(15));
 
             window.draw(Paddle(10, 10, 30, BOARD_HEIGHT - 20, 0,
                                player2.getName(), colorMenu, Color::Black).draw());
