@@ -67,14 +67,14 @@ public:
                 ball.setRadius(50);
                 break;
             case 2:
-                player1.setPaddle(Paddle((BOARD_WIDTH - 30) / 5 * 4, (BOARD_HEIGHT - 150) / 2, 30,
-                                         150, 10, "", colorPaddle, colorPaddle));
-                player2.setPaddle(Paddle((BOARD_WIDTH - 30) / 5, (BOARD_HEIGHT - 150) / 2, 30,
-                                         150, 10, "", colorPaddle, colorPaddle));
-                player1.setSpeed(1.5);
-                player2.setSpeed(1.5);
+                player1.setPaddle(Paddle((BOARD_WIDTH - 30) / 5 * 4, (BOARD_HEIGHT - 120) / 2, 30,
+                                         120, 10, "", colorPaddle, colorPaddle));
+                player2.setPaddle(Paddle((BOARD_WIDTH - 30) / 5, (BOARD_HEIGHT - 120) / 2, 30,
+                                         120, 10, "", colorPaddle, colorPaddle));
+                player1.setSpeed(1.25);
+                player2.setSpeed(1.25);
                 ball.setSpeed(1);
-                ball.setRadius(40);
+                ball.setRadius(35);
                 break;
             case 3:
                 player1.setPaddle(Paddle((BOARD_WIDTH - 20) / 5 * 4, (BOARD_HEIGHT - 75) / 2, 20,
@@ -83,8 +83,8 @@ public:
                                          75, 10, "", colorPaddle, colorPaddle));
                 player1.setSpeed(1);
                 player2.setSpeed(1);
-                ball.setSpeed(2);
-                ball.setRadius(30);
+                ball.setSpeed(1.25);
+                ball.setRadius(20);
                 break;
         }
     }
